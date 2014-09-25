@@ -1,6 +1,6 @@
 # Wapir
 
-Wapir is a *W*ikipedia *API* for *R*uby.
+Wapir is a **W**ikipedia **API** for **R**uby.
 
 ## Installation
 
