@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Bradley Skaggs"]
   spec.email         = ["bskaggs@acm.org"]
   spec.summary       = %q{Wikipedia API for Ruby}
-  spec.description   = %q{Wikipedia API for Ruby}
-  spec.homepage      = ""
+  spec.description   = %q{This uses the MediaWiki API to interact with Wikipedia, WikiData, and other MediaWiki sites.}
+  spec.homepage      = "https://github.com/bskaggs/wapir"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -24,5 +24,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "json"
   spec.add_dependency "faraday"
   spec.add_dependency "faraday-cookie_jar"
-
 end

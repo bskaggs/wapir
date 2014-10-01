@@ -14,6 +14,9 @@ module Wapir
         f.response :logger if options[:debug]
         yield(f) if block_given?
       end
+
+      @default_languages = "en"
+      @default_wikis = "enwiki"
     end
 
     #raw functions
@@ -136,9 +139,36 @@ module Wapir
     end
 
     #wikibase
-    def get_claims(entity, options = {}, &block)
+    def get_claims(entity, options = {})
       json = raw_action(:wbgetclaims, {entity: entity.gsub("\n", ' ')}.merge!(options))
       json["claims"]
+    end
+    
+    def get_entities_by_title(titles, options = {})
+      json = raw_action(:wbgetentities, {sites: @default_wikis, titles: piped_titles(titles), languages: @default_languages}.merge!(options))
+      if block_given?
+        json["entities"].each { |x| yield x }
+      else
+        json["entities"]
+      end
+    end
+    
+    def get_entities_by_id(ids, options = {})
+      json = raw_action(:wbgetentities, {ids: [ids].flatten.join("|"), languages: @default_languages}.merge!(options))
+      if block_given?
+        json["entities"].each { |x| yield x }
+      else
+        json["entities"]
+      end
+    end
+
+    def create_claim(entity, property, value, summary)
+      raw_action(:wbcreateclaim, {entity: entity, property: property, snaktype: "value", value: value.to_json, summary: summary, token: csrftoken}, :post)
+    end
+
+    def csrftoken
+      @csrftoken ||= raw_action(:query, {meta: "tokens"})["query"]["tokens"]["csrftoken"]
+      @csrftoken
     end
   end
 end
