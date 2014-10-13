@@ -162,8 +162,8 @@ module Wapir
       end
     end
 
-    def create_claim(entity, property, value, summary)
-      raw_action(:wbcreateclaim, {entity: entity, property: property, snaktype: "value", value: value.to_json, summary: summary, token: csrftoken}, :post)
+    def create_claim(entity, property, value, summary, bot = false)
+      raw_action(:wbcreateclaim, {entity: entity, property: property, snaktype: "value", value: value.to_json, summary: summary, token: csrftoken, bot: bot, maxlag: 5}, :post)
     end
 
     def csrftoken
